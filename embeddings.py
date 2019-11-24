@@ -2,7 +2,6 @@ import tensorflow_hub as hub
 import tensorflow as tf
 
 ELMO = "https://tfhub.dev/google/elmo/2"
-NNLM = "https://tfhub.dev/google/nnlm-en-dim128/1"
 
 
 def execute(tensor):
@@ -20,11 +19,6 @@ def embed(model_name, sentences):
             sentences,
             signature="default",
             as_dict=True)["elmo"]
-
-    elif model_name == "nnlm":
-        nnlm = hub.Module(NNLM)
-        executable = nnlm(sentences)
-
     else:
         raise NotImplementedError
 
@@ -36,6 +30,6 @@ def word_to_sentence(embeddings):
 
 
 def get_embeddings_elmo_nnlm(sentences):
-    return word_to_sentence(embed("elmo", sentences)), embed("nnlm", sentences)
+    return word_to_sentence(embed("elmo", sentences))
 
 
